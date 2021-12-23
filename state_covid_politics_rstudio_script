@@ -1,0 +1,1373 @@
+# State Shutdown Data
+# Kaiser Foundation has data at this page:
+# https://www.kff.org/other/state-indicator/state-actions-to-mitigate-the-spread-of-covid-19/?currentTimeframe=0&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D
+# This only includes current data. For historical data, the site directs to this github page:
+
+# https://github.com/KFFData/COVID-19-Data/tree/kff_master/State%20Policy%20Actions/State%20Social%20Distancing%20Actions
+# This lists individual tables from different dates with the status of state shutdown actions as of that date.
+# There is no table that aggregates all the data historically and includes reports from past dates.
+
+library(tidyverse)
+library(lubridate)
+
+
+state_shutdowns_june_20<-read_csv(file=url('https://raw.githubusercontent.com/huismank/COVID-19-Data/kff_master/State%20Policy%20Actions/State%20Social%20Distancing%20Actions/2020-06-04_Social_Distancing.csv'))
+state_shutdowns_june_20$date=mdy("6-4-20")
+
+
+state_shutdowns_july_20<-read_csv(file=url('https://raw.githubusercontent.com/KFFData/COVID-19-Data/kff_master/State%20Policy%20Actions/State%20Social%20Distancing%20Actions/2020-07-01_Social_Distancing.csv'))
+state_shutdowns_july_20$date=mdy("7-1-20")
+
+state_shutdowns_august_20<-read_csv(file=url('https://raw.githubusercontent.com/KFFData/COVID-19-Data/kff_master/State%20Policy%20Actions/State%20Social%20Distancing%20Actions/2020-08-03_Social_Distancing.csv'))
+state_shutdowns_august_20$date=mdy("8-3-20")
+
+state_shutdowns_september_20<-read_csv(file=url('https://raw.githubusercontent.com/KFFData/COVID-19-Data/kff_master/State%20Policy%20Actions/State%20Social%20Distancing%20Actions/2020-09-02_Social_Distancing.csv'))
+state_shutdowns_september_20$date=mdy("9-2-20")
+
+state_shutdowns_october_20<-read_csv(file=url('https://raw.githubusercontent.com/KFFData/COVID-19-Data/kff_master/State%20Policy%20Actions/State%20Social%20Distancing%20Actions/2020-10-01_Social_Distancing.csv'))
+state_shutdowns_october_20$date=mdy("10-1-20")
+
+state_shutdowns_november_20<-read_csv(file=url('https://raw.githubusercontent.com/KFFData/COVID-19-Data/kff_master/State%20Policy%20Actions/State%20Social%20Distancing%20Actions/2020-11-02_Social_Distancing.csv'))
+state_shutdowns_november_20$date=mdy("11-2-20")
+
+state_shutdowns_december_20<-read_csv(file=url('https://raw.githubusercontent.com/KFFData/COVID-19-Data/kff_master/State%20Policy%20Actions/State%20Social%20Distancing%20Actions/2020-12-01_Social_Distancing.csv'))
+state_shutdowns_december_20$date=mdy("12-1-20")
+
+state_shutdowns_january_21<-read_csv(file=url('https://raw.githubusercontent.com/KFFData/COVID-19-Data/kff_master/State%20Policy%20Actions/State%20Social%20Distancing%20Actions/2021-01-04_Social_Distancing.csv'))
+state_shutdowns_january_21$date=mdy("1-4-21")
+
+state_shutdowns_febuary_21<-read_csv(file=url('https://raw.githubusercontent.com/KFFData/COVID-19-Data/kff_master/State%20Policy%20Actions/State%20Social%20Distancing%20Actions/2021-02-01_Social_Distancing.csv'))
+state_shutdowns_febuary_21$date=mdy("2-1-21")
+
+state_shutdowns_march_21<-read_csv(file=url('https://raw.githubusercontent.com/KFFData/COVID-19-Data/kff_master/State%20Policy%20Actions/State%20Social%20Distancing%20Actions/2021-03-01_Social_Distancing.csv'))
+state_shutdowns_march_21$date=mdy("3-1-21")
+
+state_shutdowns_april_21<-read_csv(file=url('https://raw.githubusercontent.com/KFFData/COVID-19-Data/kff_master/State%20Policy%20Actions/State%20Social%20Distancing%20Actions/2021-04-05_Social_Distancing.csv'))
+state_shutdowns_april_21$date=mdy("4-5-21")
+
+state_shutdowns_may_21<-read_csv(file=url('https://raw.githubusercontent.com/KFFData/COVID-19-Data/kff_master/State%20Policy%20Actions/State%20Social%20Distancing%20Actions/2021-05-03_Social_Distancing.csv'))
+state_shutdowns_may_21$date=mdy("5-3-21")
+
+state_shutdowns_may_21_2<-read_csv(file=url('https://raw.githubusercontent.com/KFFData/COVID-19-Data/kff_master/State%20Policy%20Actions/State%20Social%20Distancing%20Actions/2021-05-17_Social_Distancing.csv'))
+state_shutdowns_may_21_2$date= mdy("5-17-21")
+
+
+# I selected the tables recorded closest to the start of the month, except for the last table which contains
+# The most recently available data from May.
+
+## Merging the dataframes together
+
+
+state_shutdowns<-
+  merge(state_shutdowns_june_20, state_shutdowns_july_20, all.x=TRUE, all.y = TRUE)
+
+state_shutdowns<-
+  merge(state_shutdowns, state_shutdowns_august_20, all.x=TRUE, all.y = TRUE)
+
+state_shutdowns<-
+  merge(state_shutdowns, state_shutdowns_september_20, all.x=TRUE, all.y = TRUE)
+
+state_shutdowns<-
+  merge(state_shutdowns, state_shutdowns_october_20, all.x=TRUE, all.y = TRUE)
+
+state_shutdowns<-
+  merge(state_shutdowns, state_shutdowns_november_20, all.x=TRUE, all.y = TRUE)
+
+state_shutdowns<-
+  merge(state_shutdowns, state_shutdowns_december_20, all.x=TRUE, all.y = TRUE)
+
+state_shutdowns<-
+  merge(state_shutdowns, state_shutdowns_january_21, all.x=TRUE, all.y = TRUE)
+
+state_shutdowns<-
+  merge(state_shutdowns, state_shutdowns_febuary_21, all.x=TRUE, all.y = TRUE)
+
+state_shutdowns<-
+  merge(state_shutdowns, state_shutdowns_march_21, all.x=TRUE, all.y = TRUE)
+
+state_shutdowns<-
+  merge(state_shutdowns, state_shutdowns_april_21, all.x=TRUE, all.y = TRUE)
+
+state_shutdowns<-
+  merge(state_shutdowns, state_shutdowns_may_21, all.x=TRUE, all.y = TRUE)
+
+state_shutdowns<-
+  merge(state_shutdowns, state_shutdowns_may_21_2, all.x=TRUE, all.y = TRUE)
+
+
+# Cleaning it up.
+state_shutdowns<-state_shutdowns[order(as.Date(state_shutdowns$date, format="%m/%d/%y")),]
+
+state_shutdowns <- rename(state_shutdowns, state=X1)
+state_shutdowns<-as_tibble(state_shutdowns)
+
+## Edited for November 2021
+state_shutdowns<-state_shutdowns %>%
+  rename(state=`...1`)
+##############################################################################################
+# Census Bureau State Groupings
+# This gov published article details how the census bureau groups states, as well as counties:
+# https://www2.census.gov/geo/pdfs/reference/GARM/Ch6GARM.pdf
+
+# We could divide by region. The Census burea defines four regions in the U.S. Northeast, Midwest,
+# South, and Southwest.
+# Below the level of region, there are nine divisions. Each region has two, except for the South
+# Which has three. These divisions are made up of a varying amount of states.
+
+# See page 24 of the document for a list of which states belong to which region, and division.
+# Each of these nine regions is described by a "SFAR" code (SFAR 1 to SFAR 9).
+# The bottom paragraph of page 20 gives a good explanation for SFAR codes.
+# They are not complicated though, they just identify the regions.
+
+# Not all the census data I've seen has SFAR codes, but I remember seeing these codes in some other datasets.
+# So grouping by these SFAR codes would allow you to group states by region.
+
+
+##############################################################################################################
+# Merging With State Level Covid Data
+
+state_covid_data<-read_csv(file=url('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv'))
+
+# Summarizing By Month
+
+state_covid_data_sum1<-state_covid_data %>%
+  group_by(year(date), month(date), state) %>%
+  summarise(sum(cases)) %>%
+  ungroup() %>%
+  mutate(date = make_date(`year(date)`,`month(date)`)) %>%
+  rename(cases = `sum(cases)`) %>%
+  select(state, cases, date)
+
+state_covid_data_sum2<-state_covid_data %>%
+  group_by(year(date), month(date), state) %>%
+  summarise(sum(deaths)) %>%
+  ungroup() %>%
+  mutate(date = make_date(`year(date)`,`month(date)`)) %>%
+  rename(deaths = `sum(deaths)`) %>%
+  select(state, deaths, date)
+
+state_covid_data_sum<- state_covid_data_sum1 %>%
+  right_join(state_covid_data_sum2, by=c("date", "state"))
+
+
+# Widening
+
+
+# Widening of covid data
+state_covid_data_cases_wide<-state_covid_data_sum %>%
+  select(-deaths) %>%
+  pivot_wider(names_from=date, values_from=cases,  values_fill=0, names_prefix="cases")
+
+state_covid_data_deaths_wide<-state_covid_data_sum %>%
+  select(-cases) %>%
+  pivot_wider(names_from=date, values_from=deaths,  values_fill=0, names_prefix="deaths")
+
+state_covid_data_wide<- state_covid_data_cases_wide %>%
+  right_join(state_covid_data_deaths_wide, by="state")
+
+
+# The state shutdown data needs to be widened. I don't know how to widen an entire dataset so I will do
+# All relevant variables seperately then combine them with the covid cases and deaths data.
+# There may be a way to code this more efficiently and neatly.
+
+# Stay At Home Orders
+stay_at_home<-state_shutdowns %>%
+  pivot_wider(id_cols = state, names_from = date, values_from = `Stay at Home Order`, names_prefix="Stay at Home Order as of")
+
+state_covid<- state_covid_data_wide %>%
+  right_join(stay_at_home, reopening, by="state")
+
+# Status of Reopening
+reopening<-state_shutdowns %>%
+  pivot_wider(id_cols = state, names_from = date, values_from = `Status of Reopening`, names_prefix="Reopening Status")
+
+state_covid<- state_covid %>%
+  right_join(reopening, by="state")
+
+# Emergency Declaration
+
+emergency_declaration<-state_shutdowns %>%
+  pivot_wider(id_cols = state, names_from = date, values_from = `Emergency Declaration`, names_prefix="Emergency Declaration")
+
+state_covid<- state_covid %>%
+  right_join(emergency_declaration, by="state")
+
+# Non-Essential Business Closures
+
+non_essential_closures<-state_shutdowns %>%
+  pivot_wider(id_cols = state, names_from = date, values_from = `Non-Essential Business Closures`, names_prefix="Non-Essential Business Closures ")
+
+state_covid<- state_covid %>%
+  right_join(non_essential_closures, by="state")
+
+# Restaurant Limits`
+
+restaurant_limits<-state_shutdowns %>%
+  pivot_wider(id_cols = state, names_from = date, values_from = `Restaurant Limits`, names_prefix="Restaurant Limits ")
+
+state_covid<- state_covid %>%
+  right_join(restaurant_limits, by="state")
+
+# Mandatory Quarantine For Travelers
+
+mandatory_quarantine<-state_shutdowns %>%
+  pivot_wider(id_cols = state, names_from = date, values_from = `Mandatory Quarantine for Travelers`, names_prefix="Mandatory Quarantine For Travelers ")
+
+state_covid<- state_covid %>%
+  right_join(mandatory_quarantine, by="state")
+
+# Large Gatherings Ban
+
+gatherings_ban<-state_shutdowns %>%
+  pivot_wider(id_cols = state, names_from = date, values_from = `Large Gatherings Ban`, names_prefix="Large Gatherings Ban ")
+
+state_covid<- state_covid %>%
+  right_join(gatherings_ban, by="state")
+
+# Statewide Face Mask Requirement: Took this one out because it contained no data for most months and is redundant.
+# The next variable for face coverings was recorded more thoroughly.
+
+## statewide_mask_requirement<-state_shutdowns %>%
+ ## pivot_wider(id_cols = state, names_from = date, values_from = `Statewide Face Mask Requirement`, names_prefix="Statewide Face Mask Requirement ")
+
+## state_covid<- state_covid %>%
+## right_join(statewide_mask_requirement, by="state")
+
+# Face Covering Requirement
+
+mask_requirement<-state_shutdowns %>%
+  pivot_wider(id_cols = state, names_from = date, values_from = `Face Covering Requirement`, names_prefix="Face Covering Requirement ")
+
+state_covid<- state_covid %>%
+  right_join(mask_requirement, by="state")
+
+# Bar Closures
+
+## bar_closures<-state_shutdowns %>%
+##  pivot_wider(id_cols = state, names_from = date, values_from = `Bar Closures`, names_prefix="Bar Closures ")
+
+## state_covid<- state_covid %>%
+ ## right_join(bar_closures, by="state")
+
+# Primary Election Postponement: This only contains data for months close to the election, and was not
+# recorded in a useful way.
+
+## election_postponment<-state_shutdowns %>%
+##  pivot_wider(id_cols = state, names_from = date, values_from = `Primary Election Postponement`, names_prefix="Primary Election Postponement ")
+
+## state_covid<- state_covid %>%
+ ## right_join(election_postponment, by="state")
+
+# School Closures
+
+school_closures<-state_shutdowns %>%
+  pivot_wider(id_cols = state, names_from = date, values_from = `School Closures`, names_prefix="School Closures ")
+
+state_covid<- state_covid %>%
+  right_join(school_closures, by="state")
+
+# State Is Easing Social Distancing Measures: this only contained data for the most recent month.
+
+# easing_social_distancing<-state_shutdowns %>%
+#  pivot_wider(id_cols = state, names_from = date, values_from = `State Is Easing Social Distancing Measures`, names_prefix="State Is Easing Social Distancing Measures ")
+
+# state_covid<- state_covid %>%
+#  right_join(easing_social_distancing, by="state")
+
+# So the above code should produce a data frame that combines the NYT cases and deaths dataset with the Kaiser
+# state covid policy data.
+
+#########################################################################################################
+## State Election Data
+
+# Loaded the state election data from a file uploaded to the github data file called MIT_state_pres.RData
+# It was automatically called x.
+
+library(readr)
+load("MIT_state_pres (2).RData")
+
+
+state_prez<-x
+
+# 2016 data
+
+state_prez_2016<- state_prez %>%
+  filter(year==2016)
+
+
+
+state_prez_wide_2016<-state_prez_2016 %>%
+  group_by(candidate, state) %>%
+  mutate(row = row_number()) %>%
+  pivot_wider(id_cols = c(row, "state"), names_from = candidate, values_from =candidatevotes, names_prefix="2016")%>%
+  select(-row)
+
+
+
+state_prez_wide_2016<-state_prez_wide_2016 %>%
+  select("state", "2016TRUMP, DONALD J.", "2016CLINTON, HILLARY", "2016JOHNSON, GARY", "2016STEIN, JILL",)
+
+
+
+## IMPORTANT NOTE: The 2016 widened data contains duplicates of some states. With the exception of Maryland
+## and New York, none of these states contain any values for the relevant candidates. The reason for the Maryland
+## Duplicate is that there were double entries for in the long data for both regular, and write in votes for
+## Clinton and Trump. In the case of New York, there are triple entries. This is because there were two entries
+## For Donald Trump in the long data, one classified as Republican, and the other as the conservative party.
+## Same goes for Clinton, entered three times for Democrat, Working Class party, and Women's party.
+## I expect similar issues occurred in the case of the other states but because they don't actually contain
+## Any data there is no need to worry about them.
+
+## This removes the redundant states and corrects the values.
+
+state_prez_wide_2016 <- state_prez_wide_2016[-c(4, 5, 18, 25, 38, 39, 43, 51, 60), ]
+
+## Maryland: regular cell for Trump=943169,
+## writein=259
+943169+259
+## actual trump votes in Maryland=943428
+state_prez_wide_2016[state_prez_wide_2016 == "943169"] <- 943428
+
+## Maryland: Clinton
+1677928+78
+## actual Clinton votes in Maryland=1678006
+state_prez_wide_2016[state_prez_wide_2016 == "1677928"] <- 1678006
+
+## New York: Trump
+## Republican party votes=2527142
+## Conservative party= 292392
+2527142+ 292392
+## actual trump votes in New York= 2819534
+state_prez_wide_2016[state_prez_wide_2016 == "2527142"] <- 2819534
+
+## New York: Clinton
+## Democratic party votes=4379789
+## Working Families party Votes= 140041
+## Women's Equality= 36294
+4379789 + 140041 + 36294
+## actual Clinton votes in New York= 4556124
+state_prez_wide_2016[state_prez_wide_2016 == "4379789"] <- 4556124
+
+
+## 2020 Data
+
+state_prez_2020<- state_prez %>%
+  filter(year==2020)
+
+state_prez_wide_2020<-state_prez_2020 %>%
+  group_by(candidate, state) %>%
+  mutate(row = row_number()) %>%
+  pivot_wider(id_cols = c(row, "state"), names_from = candidate, values_from =candidatevotes, names_prefix="2020")%>%
+  select(-row)
+
+state_prez_wide_2020<-state_prez_wide_2020 %>%
+  select("state", "2020TRUMP, DONALD J.", "2020BIDEN, JOSEPH R. JR", "2020JORGENSEN, JO")
+
+# The 2020 data did not have the same issue as the 2016 df.
+
+#### Joining Together
+
+# The values must be changed to lowercase.
+
+state_prez_wide_2016$state= tolower(state_prez_wide_2016$state)
+
+state_prez_wide_2020$state= tolower(state_prez_wide_2020$state)
+
+state_covid$state= tolower(state_covid$state)
+
+state_covid_draft<- state_covid %>%
+  right_join(state_prez_wide_2016, by="state")
+
+state_covid_draft<- state_covid_draft %>%
+  right_join(state_prez_wide_2020, by="state")
+
+
+# Here is a rough draft of a dataframe combining the NYT state-level cases and deaths data, the Kaiser
+# state Covid policy data, and the MIT state level election data.
+
+
+
+## changing formatting of variable names
+
+state_covid_draft <- state_covid_draft %>%
+  rename(cases_jan_2020 = `cases2020-01-01`) %>%
+  rename(cases_feb_2020 = `cases2020-02-01`) %>%
+  rename(cases_mar_2020 = `cases2020-03-01`) %>%
+  rename(cases_apr_2020 = `cases2020-04-01`) %>%
+  rename(cases_may_2020 = `cases2020-05-01`) %>%
+  rename(cases_jun_2020 = `cases2020-06-01`) %>%
+  rename(cases_jul_2020 = `cases2020-07-01`) %>%
+  rename(cases_aug_2020 = `cases2020-08-01`) %>%
+  rename(cases_sep_2020 = `cases2020-09-01`) %>%
+  rename(cases_oct_2020 = `cases2020-10-01`) %>%
+  rename(cases_nov_2020 = `cases2020-11-01`) %>%
+  rename(cases_dec_2020 = `cases2020-12-01`) %>%
+  rename(cases_jan_2021 = `cases2021-01-01`) %>%
+  rename(cases_feb_2021 = `cases2021-02-01`) %>%
+  rename(cases_mar_2021 = `cases2021-03-01`) %>%
+  rename(cases_apr_2021 = `cases2021-04-01`) %>%
+  rename(cases_may_2021 = `cases2021-05-01`) %>%
+  rename(cases_jun_2021 = `cases2021-06-01`) %>%
+  rename(cases_jul_2021 = `cases2021-07-01`) %>%
+  rename(cases_aug_2021 = `cases2021-08-01`) %>%
+  rename(cases_sep_2021 = `cases2021-09-01`) %>%
+  rename(cases_oct_2021 = `cases2021-10-01`) %>%# data collection at October
+  rename(deaths_jan_2020 = `deaths2020-01-01`) %>%
+  rename(deaths_feb_2020 = `deaths2020-02-01`) %>%
+  rename(deaths_mar_2020 = `deaths2020-03-01`) %>%
+  rename(deaths_apr_2020 = `deaths2020-04-01`) %>%
+  rename(deaths_may_2020 = `deaths2020-05-01`) %>%
+  rename(deaths_jun_2020 = `deaths2020-06-01`) %>%
+  rename(deaths_jul_2020 = `deaths2020-07-01`) %>%
+  rename(deaths_aug_2020 = `deaths2020-08-01`) %>%
+  rename(deaths_sep_2020 = `deaths2020-09-01`) %>%
+  rename(deaths_oct_2020 = `deaths2020-10-01`) %>%
+  rename(deaths_nov_2020 = `deaths2020-11-01`) %>%
+  rename(deaths_dec_2020 = `deaths2020-12-01`) %>%
+  rename(deaths_jan_2021 = `deaths2021-01-01`) %>%
+  rename(deaths_feb_2021 = `deaths2021-02-01`) %>%
+  rename(deaths_mar_2021 = `deaths2021-03-01`) %>%
+  rename(deaths_apr_2021 = `deaths2021-04-01`) %>%
+  rename(deaths_may_2021 = `deaths2021-05-01`) %>%
+  rename(deaths_jun_2021 = `deaths2021-06-01`) %>%
+  rename(deaths_jul_2021 = `deaths2021-07-01`) %>%
+  rename(deaths_aug_2021 = `deaths2021-08-01`) %>%
+  rename(deaths_sep_2021 = `deaths2021-09-01`) %>%
+  rename(deaths_oct_2021 = `deaths2021-10-01`) %>%
+  rename(home_order_jun_2020= `Stay at Home Order as of2020-06-04`) %>%
+rename(home_order_jul_2020= `Stay at Home Order as of2020-07-01`) %>%
+rename(home_order_aug_2020= `Stay at Home Order as of2020-08-03`) %>%
+rename(home_order_sep_2020= `Stay at Home Order as of2020-09-02`) %>%
+rename(home_order_oct_2020= `Stay at Home Order as of2020-10-01`) %>%
+rename(home_order_nov_2020= `Stay at Home Order as of2020-11-02`) %>%
+rename(home_order_dec_2020= `Stay at Home Order as of2020-12-01`) %>%
+rename(home_order_jan_2021= `Stay at Home Order as of2021-01-04`) %>%
+rename(home_order_feb_2021= `Stay at Home Order as of2021-02-01`) %>%
+rename(home_order_mar_2021= `Stay at Home Order as of2021-03-01`) %>%
+rename(home_order_apr_2021= `Stay at Home Order as of2021-04-05`) %>%
+rename(home_order_may_2021= `Stay at Home Order as of2021-05-03`) %>%
+rename(reopen_jun_2020=`Reopening Status2020-06-04`) %>%
+rename(reopen_jul_2020=`Reopening Status2020-07-01`) %>%
+rename(reopen_aug_2020=`Reopening Status2020-08-03`) %>%
+rename(reopen_sep_2020=`Reopening Status2020-09-02`) %>%
+rename(reopen_oct_2020=`Reopening Status2020-10-01`) %>%
+rename(reopen_nov_2020=`Reopening Status2020-11-02`) %>%
+rename(reopen_dec_2020=`Reopening Status2020-12-01`) %>%
+rename(reopen_jan_2021=`Reopening Status2021-01-04`) %>%
+rename(reopen_feb_2021=`Reopening Status2021-02-01`) %>%
+rename(reopen_mar_2021=`Reopening Status2021-03-01`) %>%
+rename(reopen_apr_2021=`Reopening Status2021-04-05`) %>%
+rename(reopen_may_third_2021=`Reopening Status2021-05-03`) %>%
+rename(reopen_may_seventeen_2021=`Reopening Status2021-05-17`) %>%
+rename(emer_decl_jun_2020=`Emergency Declaration2020-06-04`) %>%
+rename(emer_decl_jul_2020=`Emergency Declaration2020-07-01`) %>%
+rename(emer_decl_aug_2020=`Emergency Declaration2020-08-03`) %>%
+rename(emer_decl_sep_2020=`Emergency Declaration2020-09-02`) %>%
+rename(emer_decl_oct_2020=`Emergency Declaration2020-10-01`) %>%
+rename(emer_decl_nov_2020=`Emergency Declaration2020-11-02`) %>%
+rename(emer_decl_dec_2020=`Emergency Declaration2020-12-01`) %>%
+rename(emer_decl_jan_2021=`Emergency Declaration2021-01-04`) %>%
+rename(emer_decl_feb_2021=`Emergency Declaration2021-02-01`) %>%
+rename(emer_decl_mar_2021=`Emergency Declaration2021-03-01`) %>%
+rename(emer_decl_apr_2021= `Emergency Declaration2021-04-05`) %>%
+rename(emer_decl_may_third_2021= `Emergency Declaration2021-05-03`) %>%
+rename(emer_decl_may_seventeen_2021 =`Emergency Declaration2021-05-17`) %>%
+rename(biz_close_jun_2020 =`Non-Essential Business Closures 2020-06-04`) %>%
+rename(biz_close_jul_2020 =`Non-Essential Business Closures 2020-07-01`) %>%
+rename(biz_close_aug_2020=`Non-Essential Business Closures 2020-08-03`) %>%
+rename(biz_close_sep_2020=`Non-Essential Business Closures 2020-09-02`) %>%
+rename(biz_close_oct_2020=`Non-Essential Business Closures 2020-10-01`) %>%
+rename(biz_close_nov_2020=`Non-Essential Business Closures 2020-11-02`) %>%
+rename(biz_close_dec_2020 =`Non-Essential Business Closures 2020-12-01`) %>%
+rename(biz_close_jan_2021 =`Non-Essential Business Closures 2021-01-04`) %>%
+rename(biz_close_feb_2021 =`Non-Essential Business Closures 2021-02-01`) %>%
+rename(biz_close_mar_2021 =`Non-Essential Business Closures 2021-03-01`) %>%
+rename(biz_close_apr_2021 =`Non-Essential Business Closures 2021-04-05`) %>%
+rename(biz_close_may_third_2021 =`Non-Essential Business Closures 2021-05-03`) %>%
+rename(biz_close_may_seventeen_2021 =`Non-Essential Business Closures 2021-05-17`) %>%
+rename(dine_limit_jun_2020 =`Restaurant Limits 2020-06-04`) %>%
+rename(dine_limit_jul_2020 =`Restaurant Limits 2020-07-01`) %>%
+rename(dine_limit_aug_2020=`Restaurant Limits 2020-08-03`) %>%
+rename(dine_limit_sep_2020=`Restaurant Limits 2020-09-02`) %>%
+rename(dine_limit_oct_2020=`Restaurant Limits 2020-10-01`) %>%
+rename(dine_limit_nov_2020=`Restaurant Limits 2020-11-02`) %>%
+rename(dine_limit_dec_2020=`Restaurant Limits 2020-12-01`) %>%
+rename(dine_limit_jan_2021=`Restaurant Limits 2021-01-04`) %>%
+rename(dine_limit_feb_2021=`Restaurant Limits 2021-02-01`) %>%
+rename(dine_limit_mar_2021=`Restaurant Limits 2021-03-01`) %>%
+rename(dine_limit_apr_2021=`Restaurant Limits 2021-04-05`) %>%
+rename(dine_limit_may_third_2021=`Restaurant Limits 2021-05-03`) %>%
+rename(dine_limit_may_seventeen_2021=`Restaurant Limits 2021-05-17`) %>%
+rename(quar_travel_jun_2020 =`Mandatory Quarantine For Travelers 2020-06-04`) %>%
+rename(quar_travel_jul_2020 =`Mandatory Quarantine For Travelers 2020-07-01`) %>%
+rename(quar_travel_aug_2020 =`Mandatory Quarantine For Travelers 2020-08-03`) %>%
+rename(quar_travel_sep_2020 =`Mandatory Quarantine For Travelers 2020-09-02`) %>%
+rename(quar_travel_oct_2020 =`Mandatory Quarantine For Travelers 2020-10-01`) %>%
+rename(quar_travel_nov_2020 =`Mandatory Quarantine For Travelers 2020-11-02`) %>%
+rename(quar_travel_dec_2020 =`Mandatory Quarantine For Travelers 2020-12-01`) %>%
+rename(quar_travel_jan_2021=`Mandatory Quarantine For Travelers 2021-01-04`) %>%
+rename(quar_travel_feb_2021=`Mandatory Quarantine For Travelers 2021-02-01`) %>%
+rename(quar_travel_mar_2021=`Mandatory Quarantine For Travelers 2021-03-01`) %>%
+rename(quar_travel_apr_2021 =`Mandatory Quarantine For Travelers 2021-04-05`) %>%
+rename(quar_travel_may_third_2021 =`Mandatory Quarantine For Travelers 2021-05-03`) %>%
+rename(quar_travel_may_seventeen_2021 =`Mandatory Quarantine For Travelers 2021-05-17`) %>%
+rename(gather_ban_jun_2020 =`Large Gatherings Ban 2020-06-04`) %>%
+rename(gather_ban_jul_2020 =`Large Gatherings Ban 2020-07-01`) %>%
+rename(gather_ban_aug_2020 =`Large Gatherings Ban 2020-08-03`) %>%
+rename(gather_ban_sep_2020=`Large Gatherings Ban 2020-09-02`) %>%
+rename(gather_ban_oct_2020=`Large Gatherings Ban 2020-10-01`) %>%
+rename(gather_ban_nov_2020=`Large Gatherings Ban 2020-11-02`) %>%
+rename(gather_ban_dec_2020=`Large Gatherings Ban 2020-12-01`) %>%
+rename(gather_ban_jan_2021=`Large Gatherings Ban 2021-01-04`) %>%
+rename(gather_ban_feb_2021=`Large Gatherings Ban 2021-02-01`) %>%
+rename(gather_ban_mar_20210=`Large Gatherings Ban 2021-03-01`) %>%
+rename(gather_ban_apr_2021=`Large Gatherings Ban 2021-04-05`) %>%
+rename(gather_ban_may_three_2021=`Large Gatherings Ban 2021-05-03`) %>%
+rename(gather_ban_may_seventeen_2021=`Large Gatherings Ban 2021-05-17`) %>%
+rename(face_cover_jun_2020=`Face Covering Requirement 2020-06-04`) %>%
+rename(face_cover_jul_2020 =`Face Covering Requirement 2020-07-01`) %>%
+rename(face_cover_aug_2020=`Face Covering Requirement 2020-08-03`) %>%
+rename(face_cover_sep_2020=`Face Covering Requirement 2020-09-02`) %>%
+rename(face_cover_oct_2020=`Face Covering Requirement 2020-10-01`) %>%
+rename(face_cover_nov_2020=`Face Covering Requirement 2020-11-02`) %>%
+rename(face_cover_dec_2020=`Face Covering Requirement 2020-12-01`) %>%
+rename(face_cover_jan_2021=`Face Covering Requirement 2021-01-04`) %>%
+rename(face_cover_feb_2021=`Face Covering Requirement 2021-02-01`) %>%
+rename(face_cover_mar_2021=`Face Covering Requirement 2021-03-01`) %>%
+rename(face_cover_apr_2021=`Face Covering Requirement 2021-04-05`) %>%
+rename(face_cover_may_third_2021=`Face Covering Requirement 2021-05-03`) %>%
+rename(face_cover_may_seventeen_2021=`Face Covering Requirement 2021-05-17`) %>%
+rename(school_close_jun_2020= `School Closures 2020-06-04`) %>%
+rename(school_close_jul_2020= `School Closures 2020-07-01`) %>%
+rename(school_close_aug_2020=`School Closures 2020-08-03`) %>%
+rename(school_close_sep_2020=`School Closures 2020-09-02`) %>%
+rename(school_close_oct_2020=`School Closures 2020-10-01`) %>%
+rename(school_close_nov_2020=`School Closures 2020-11-02`) %>%
+rename(school_close_dec_2020=`School Closures 2020-12-01`) %>%
+rename(school_close_jan_2021=`School Closures 2021-01-04`) %>%
+rename(school_close_feb_2021=`School Closures 2021-02-01`) %>%
+rename(school_close_mar_2021=`School Closures 2021-03-01`) %>%
+rename(school_close_apr_2021=`School Closures 2021-04-05`) %>%
+rename(school_close_may_third_2021=`School Closures 2021-05-03`) %>%
+rename(school_close_may_seventeen_2021=`School Closures 2021-05-17`)
+
+state_covid_draft <- state_covid_draft %>%
+  mutate(state = str_to_title(state))
+
+######################################################################################################################
+## Census State Population Data
+
+### Data identifying which of the four geographical regions, and which of the nine divisions, that the census
+### bureau uses to statistically group states is included in this df, and so those variables
+### will be added to the combined df Let me know how you would like to use these for groupings in the final df.
+### Here, I've selected just state population, change in population in a given year, births, deaths, and regional
+### Grouping variables, but immigration and migration data could also be included.
+
+## From https://www.census.gov/data/tables/time-series/demo/popest/2010s-state-total.html
+
+population<-read.csv("http://www2.census.gov/programs-surveys/popest/datasets/2010-2019/national/totals/nst-est2019-alldata.csv")
+
+population<-population %>%
+select("NAME", "CENSUS2010POP", "POPESTIMATE2011", "POPESTIMATE2012", "POPESTIMATE2013", "POPESTIMATE2014",
+"POPESTIMATE2015", "POPESTIMATE2016", "POPESTIMATE2017", "POPESTIMATE2018", "POPESTIMATE2019", "NPOPCHG_2010", "NPOPCHG_2010",
+"NPOPCHG_2011", "NPOPCHG_2012", "NPOPCHG_2013", "NPOPCHG_2014", "NPOPCHG_2015", "NPOPCHG_2016", "NPOPCHG_2017",
+"NPOPCHG_2018", "NPOPCHG_2019", "BIRTHS2010", "BIRTHS2011", "BIRTHS2012", "BIRTHS2013", "BIRTHS2014",
+"BIRTHS2015", "BIRTHS2016", "BIRTHS2017", "BIRTHS2018", "BIRTHS2019", "DEATHS2010", "DEATHS2011", "DEATHS2012",
+"DEATHS2013", "DEATHS2014", "DEATHS2015", "DEATHS2016", "DEATHS2017", "DEATHS2018", "DEATHS2019", "SUMLEV", "REGION", "DIVISION") %>%
+rename(state="NAME")
+
+population <- population[-c(1, 2, 3, 4, 5, 57), ]
+
+population<-as_tibble(population)
+
+population<-population %>%
+  mutate(state=str_to_title(population$state))
+
+population <- population %>%
+  select(state, CENSUS2010POP, POPESTIMATE2019, REGION, DIVISION)
+
+
+state_covid_draft<- state_covid_draft %>%
+  right_join(population, by="state")
+
+
+### Here is a link to the census data variable descriptions:
+### https://www2.census.gov/programs-surveys/popest/technical-documentation/file-layouts/2010-2019/nst-est2019-alldata.pdf
+### Let me know which ones to keep in the df.
+
+############################################################################################################################
+## State GDP data
+
+## Data is from the Bureau of economic analysis, and the df was created using this form:
+## https://apps.bea.gov/iTable/index_regional.cfm
+## Citation info here: https://www.bea.gov/help/guidelines-for-citing-bea
+## The BEA recommends linking directly to the online data as a citation.
+
+## This file can be pulled from the repository.
+
+## Updates -- changing to quarterly GDP
+
+state_gdp<-read.csv("quarterly_gdp_change_state.csv")
+state_gdp
+#library(haven)
+#state_gdp<-read_sav("state_gdp.sav")
+
+#state_gdp<- state_gdp %>%
+#  setNames(c(names(.)[1], paste0(names(.)[-1], "_state_GDP_"))) %>%
+#  rename(state="state_state_GDP_")
+#  state_gdp$state= tolower(state_gdp$state)
+
+## Merging with combined df
+
+names(state_gdp)
+
+state_gdp <- state_gdp %>%
+  rename(q1_gdp_2019 = `X2018.Q4.2019.Q1`) %>%
+  rename(q2_gdp_2019=`X2019.Q1..Q2`) %>%
+  rename(q3_gdp_2019=`X2019.Q2..Q3`) %>%
+  rename(q4_gdp_2019=`X2019.Q3..Q4`) %>%
+  rename(q1_gdp_2020=`X2019.Q4.2020.Q1`) %>%
+  rename(q2_gdp_2020=`X2020.Q1..Q2`) %>%
+  rename(q3_gdp_2020=`X2020.Q2..Q3`) %>%
+  rename(q4_gdp_2020=`X2020.Q3..Q4`) %>%
+  rename(q1_gdp_2021=`X2020.Q4.2021.Q1`) %>%
+  rename(q2_gdp_2021=`X2021.Q1..Q2`) %>%
+  rename(state=GeoName)
+
+state_covid_draft<- state_covid_draft %>%
+    right_join(state_gdp, by="state")
+
+## State personal income per capita
+## For now leaving per capita income as is, yearly
+
+per_capita_income <- read_csv("state_per_capita_income.csv")
+
+per_capita_income <- per_capita_income %>%
+  select(state, `2020`) %>%
+  rename(pc_income_2020 = `2020`)
+
+#per_capita_income<- per_capita_income %>%
+#setNames(c(names(.)[1], paste0(names(.)[-1], "_state_personal_income_per_capita")))%>%
+#select(-GeoFips)%>%
+#rename(state="state_state_personal_income_per_capita")
+
+state_covid_draft<- state_covid_draft %>%
+  right_join(per_capita_income, by="state")
+
+## Drug and alcohol deaths by state
+
+## See git for citation info. Data is from the CDC.
+
+library(readr)
+drug_alcohol_deaths <- read_delim("drug_alcohol_deaths.csv", "\"", escape_double = FALSE, col_types = cols(X1 = col_skip(),
+X3 = col_skip(), `State Code` = col_skip(), X5 = col_skip(), X7 = col_skip(), year = col_skip()), trim_ws = TRUE)
+
+
+drug_alcohol_deaths<-drug_alcohol_deaths %>%
+  group_by(state, Year) %>%
+  mutate(row = row_number()) %>%
+  pivot_wider(id_cols = c(row, "state"), names_from = "Year", values_from = "Deaths", names_prefix="drug_alcohol_deaths_in_") %>%
+  select (-row)
+
+#drug_alcohol_deaths$state= tolower(drug_alcohol_deaths$state)
+
+## right now just keeping 2019 deaths
+
+drug_alcohol_deaths<-drug_alcohol_deaths %>%
+  select(state, drug_alcohol_deaths_in_2019) %>%
+  rename(drug_alc_deaths_2019 = drug_alcohol_deaths_in_2019)
+
+state_covid_draft<- state_covid_draft %>%
+  right_join(drug_alcohol_deaths, by="state")
+
+##################################################################################################################################################
+### Unemployment by state.
+
+# Unemployment
+
+## I was not able to get unemployment data from the BLS website. Their website makes it very difficult to find data.
+## I was able to find that data from the Kaiser foundation using this tool: https://www.kff.org/other/state-indicator/unemployment-rate/?activeTab=graph&currentTimeframe=0&startTimeframe=23&selectedRows=%7B%22states%22:%7B%22all%22:%7B%7D%7D,%22wrapups%22:%7B%22united-states%22:%7B%7D%7D%7D&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D
+
+library(readr)
+unemployment_rate <- read_csv("unemployment_rate.csv")
+
+unemployment_rate<-unemployment_rate %>%
+  select(`Dec 2019__Unemployed` ,`Jan 2020__Unemployed`, `Feb 2020__Unemployed`,
+         `Mar 2020__Unemployed`,`Apr 2020__Unemployed`, `May 2020__Unemployed`,
+         `Jun 2020__Unemployed`,`Jul 2020__Unemployed`, `Aug 2020__Unemployed`,
+         `Sept 2020__Unemployed`,`Oct 2020__Unemployed`, `Nov 2020__Unemployed`,
+         `Dec 2020__Unemployed` ,`Jan 2021__Unemployed`, `Feb 2021__Unemployed`,
+         `Mar 2021__Unemployed`, `Apr 2021__Unemployed`, Location)
+
+
+unemployment_rate<- unemployment_rate %>%
+rename(state="Location")
+
+#unemployment_rate$state= tolower(unemployment_rate$state)
+
+state_covid_draft<- state_covid_draft %>%
+  right_join(unemployment_rate, by="state")
+
+
+########################################################################################################
+## This code was for women in legislature data from a different source other then the CAWP one.
+## Women Legislators
+
+## library(readr)
+## women_legislators <- read_csv("women_legislators.csv")
+
+
+## women_legislators$state= tolower(women_legislators$state)
+
+## state_covid_draft<- state_covid_draft %>%
+## right_join(women_legislators, by="state")
+
+
+########################################################################################################
+## State Policy Liberalism
+
+## This dataset loads states under the name of their postal code, and it just lists years starting at number 1
+## instead of identifying the year. Since the paper examined state policies from 1936 to 2014, and because
+## the lower numbered years are missing two states, the highest numbered year must be the most recent, 2014.
+
+load("~/Documents/state_covid_politics/statepolicyliberalism.RData")
+
+state_liberalism <- table
+
+state_liberalism
+
+state_liberalism<- state_liberalism %>%
+  filter(year==79)
+
+
+## This dataset says it contains postal code abbreviations, but does not, and the fips codes are not correct either. (Arizona should be 4 and state FIPS codes skip the number 3, so every code after that will be wrong).
+## One of the sections of r-code posted by the researchers on the dataverse shows how they made the stpo (state) variable.
+## https://dataverse.harvard.edu/file.xhtml?persistentId=doi:10.7910/DVN/K3QWZW/WTGZBL&version=2.0
+## The states are generally listed in alphabetical order, except for Alaska which is put before Alabama. I copy and
+## pasted the code in the researchers script file used to create the stpo variable to get the correct order, then replaced the values
+## of stpo in the state_liberalism df with those abbreviated state values.
+
+stpos <- c("AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DE", "FL", "GA", "HI",
+           "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI",
+           "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV",
+           "NY", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT",
+           "VA", "VT", "WA", "WI", "WV", "WY")
+
+state_liberalism$stpo <- stpos
+
+# install.packages("usdata")
+library(usdata)
+
+state_liberalism<- state_liberalism %>%
+  mutate(state = abbr2state(stpo))
+
+# state_liberalism$state= tolower(state_liberalism$state)
+
+state_liberalism<- state_liberalism %>%
+  select(state, policysociallib_est, policyeconlib_est, masssociallib_est, masseconlib_est) %>%
+  rename(state_social_liberalism_policy= policysociallib_est) %>%
+  rename(state_econ_liberalism_policy=policyeconlib_est) %>%
+  rename(mass_social_liberalism_policy=masssociallib_est) %>%
+  rename(mass_econ_liberalism_policy=masseconlib_est)
+
+
+##### TK NOV 2021 Check what happens to here...
+## need to fix merge function
+state_liberalism %>%
+  mutate(state = str_to_title(state))
+
+
+state_covid_draft<- state_covid_draft %>%
+  full_join(state_liberalism, by="state")
+
+
+#state_liberalism %>%
+#  mutate(state = str)
+
+########################################################################################################
+## State Obesity Levels
+
+obesity <- read_csv("obesity.csv")
+
+obesity<- obesity %>%
+  rename(state="State")
+
+obesity$state= tolower(obesity$state)
+
+state_covid_draft<- state_covid_draft %>%
+  right_join(obesity, by="state")
+
+########################################################################################################
+## Women In Legislature 2
+## This source required some minor editing in github to make it work. I uploaded the table from this page:
+## https://cawp.rutgers.edu/women-state-legislature-2021 to a csv converter, then altered the variable names
+## in github so that the column headers would be formatted correctly without subheaders. I removed the rows
+## under the abbreviations AS, GU, MP, PR, and VI from the dataset in Github because otherwise these non-states
+## create NA rows for all other values in the dataset.
+
+cawpdata <- read_csv("cawpdata.csv")
+
+
+cawpdata<- cawpdata %>%
+  mutate(state = abbr2state(State)) %>%
+  select(-State)
+
+#cawpdata$state= tolower(cawpdata$state)
+
+cawpdata<- cawpdata %>%
+select("state", "Overall", "Total women in senate", "Total Senate", "Total Women in House", "Total House", "Total women in legislature", "Total Legis.")
+
+cawpdata<- cawpdata %>%
+rename("percent_women_legislature"= "Overall") %>%
+select(state, percent_women_legislature)
+
+state_covid_draft<- state_covid_draft %>%
+  full_join(cawpdata, by="state")
+
+
+########################################################################################################
+## 2019 State Poverty Data
+## Taken from a KFF file found at this link: https://www.kff.org/other/state-indicator/poverty-rate-by-raceethnicity/?currentTimeframe=0&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D#notes
+## KFF took their data from the ACS. The link contains a note discussing what definition of poverty is being
+## used in this data.
+
+state_poverty <- read_csv("state_poverty.csv",
+                          skip = 2)
+state_poverty<- state_poverty %>%
+  rename(state="Location") %>%
+  select(-Footnotes)
+
+state_poverty<- state_poverty %>%
+  rename("% of total population below poverty line"="Total")
+
+state_poverty <- state_poverty[-c(1, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65), ]
+
+#state_poverty$state= tolower(state_poverty$state)
+
+### Note: the line of code below excludes other variables in the dataset describing poverty rates within states
+### by race. It can be deleted to keep the different racial categories.
+
+state_poverty<- state_poverty %>%
+  select("state", "% of total population below poverty line")
+
+state_covid_draft<- state_covid_draft %>%
+  right_join(state_poverty, by="state")
+
+
+########################################################################################################
+## State expenditures per-capita
+
+## https://www.kff.org/other/state-indicator/per-capita-state-spending/?currentTimeframe=0&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D
+## This KFF table gives a measure of state expenditures per-capita. The data is taken from the National
+## Association of State Budget Officers.
+
+state_per_capita_spending <- read_csv("state_per_capita_spending.csv",
+                                      col_names = TRUE, skip = 2)
+
+state_per_capita_spending<- state_per_capita_spending %>%
+  rename(state="Location")
+
+state_per_capita_spending<- state_per_capita_spending %>%
+  rename("Per Capita State Spending-2019"="Per Capita State Spending")
+
+state_per_capita_spending$state= tolower(state_per_capita_spending$state)
+
+state_per_capita_spending <- state_per_capita_spending[-c(52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69), ]
+
+state_covid_draft<- state_covid_draft %>%
+  right_join(state_per_capita_spending, by="state")
+
+## Note to self: try using this https://www.kff.org/statedata/custom/?indicators=32234&regions=&stage=2 and
+## left joining it.
+
+
+## Note to self for Friday find Census Fips codes.
+
+########################################################################################################
+## Heart Disease Deaths Per 100,000 by states as of 2019
+
+## From: https://www.kff.org/other/state-indicator/number-of-deaths-due-to-diseases-of-the-heart-per-100000-population/?currentTimeframe=0&selectedRows=%7B%22states%22:%7B%22all%22:%7B%7D%7D%7D&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D
+## Data is from 2019 and is taken from the CDC.
+
+state_heart_disease <- read_csv("state_heart_disease.csv",
+                                skip = 2)
+state_heart_disease<- state_heart_disease %>%
+  rename(state="Location")
+
+state_heart_disease<- state_heart_disease %>%
+  rename("Heart Disease Death Rate Per 100,000-2019"="Heart Disease Death Rate per 100,000")
+
+state_heart_disease$state= tolower(state_heart_disease$state)
+
+state_covid_draft<- state_covid_draft %>%
+  right_join(state_heart_disease, by="state")
+
+view(state_covid_draft)
+
+########################################################################################################
+## State Life Expectancy (2018)
+
+## https://www.kff.org/other/state-indicator/life-expectancy/?currentTimeframe=0&selectedRows=%7B%22states%22:%7B%22all%22:%7B%7D%7D%7D&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D
+## Data is for 2018.
+## Table was dowloaded from the KFF link. KFF took it from a paper in the literature in "National health
+## statistics reports". DOI: https://doi.org/10.15620/cdc:101128.
+
+state_life_expectancy <- read_csv("state_life_expectancy.csv",
+                                  skip = 2)
+state_life_expectancy<- state_life_expectancy %>%
+  rename(state="Location")
+
+state_life_expectancy<- state_life_expectancy %>%
+  rename("Life Expectancy at Birth in years as of 2018"="Life Expectancy at Birth (years)")
+
+state_life_expectancy$state= tolower(state_life_expectancy$state)
+
+state_life_expectancy <- state_life_expectancy[-c(52, 53), ]
+
+
+state_covid_draft<- state_covid_draft %>%
+  right_join(state_life_expectancy, by="state")
+########################################################################################################
+## Removing unwanted variables
+state_covid_draft<- state_covid_draft %>%
+select(-"SUMLEV", -"GeoFips", -"stpo", -"year", -"policysociallib_se", -"policyeconlib_se", -"masssociallib_se", -"masseconlib_se", -"dempid_se", -"reppid_se", -"policyeconlib_se")
+
+state_covid_draft<- state_covid_draft %>%
+ rename("2019_self_reported_obesity"='Prevalence of self reported obesity') %>%
+ rename("obesity_variable_CI"="95% CI of self reported obesity")
+
+########################################################################################################
+## Congressional Cooperative Election Survey
+
+
+cooperative_election_study<-read_csv(file=url('https://dataverse.harvard.edu/api/access/datafile/4471223'))
+
+cces<-cooperative_election_study %>%
+  select(countyfips, CC20_309a_1, CC20_309a_2, CC20_309a_3, CC20_309a_4, CC20_309a_5,
+         CC20_309c_1, CC20_309c_2, CC20_309c_3, CC20_309c_4, CC20_309c_5, CC20_309c_6,
+         CC20_309c_7, CC20_309c_8, CC20_309c_9, CC20_309c_10,
+         CC20_351a, CC20_351b, healthins_1, commonpostweight, commonweight, caseid)
+
+cces<-cces %>%
+  mutate(fips1=as.numeric(countyfips))
+
+cces<-cces %>%
+  mutate(fips1=as.character(fips1))
+
+
+## Correlating State names with county fips from a table used in the county dataset.
+
+county_health_ranking_measures <- read_csv("county_health_ranking_measures.csv")
+
+county_state_table<-county_health_ranking_measures %>%
+  select(FIPS, State)
+
+county_state_table<-county_state_table %>%
+  mutate(fips1=as.numeric(FIPS))
+
+county_state_table<-county_state_table %>%
+  mutate(fips1=as.character(fips1))
+
+cces<-cces %>%
+  left_join(county_state_table, by="fips1")
+
+cces<-cces %>%
+  rename(state=State)
+
+cces$state= tolower(cces$state)
+
+## NOTE: these are average dummy variables. 1 is equivalent to a positive response, 2 is equivalent to a negative.
+## So a value closer to 2 for the question "respondent has covid" would indicate that most respondents in a state
+## have not yet had it.
+
+## Respondent has had Covid-19
+
+has_had_covid <- cces %>%
+  group_by(state) %>%
+  summarize(has_had_covid = mean(CC20_309a_1))
+
+state_covid_draft<- state_covid_draft %>%
+  left_join(has_had_covid, by="state")
+
+## Respondent has had a family member with Covid-19
+
+family_member_has_had_covid <- cces %>%
+  group_by(state) %>%
+  summarize(family_member_has_had_covid = mean(CC20_309a_2))
+
+state_covid_draft<- state_covid_draft %>%
+  left_join(family_member_has_had_covid, by="state")
+
+## Respondent has had a friend with Covid-19
+
+friend_has_had_covid <- cces %>%
+  group_by(state) %>%
+  summarize(friend_has_had_covid = mean(CC20_309a_3))
+
+state_covid_draft<- state_covid_draft %>%
+  left_join(friend_has_had_covid, by="state")
+
+## Respondent has had a co-worker with Covid-19
+
+co_worker_has_had_covid <- cces %>%
+  group_by(state) %>%
+  summarize(co_worker_has_had_covid  = mean(CC20_309a_4))
+
+state_covid_draft<- state_covid_draft %>%
+  left_join(co_worker_has_had_covid , by="state")
+
+## Respondent knows no one who has been diagnosed
+
+know_no_one_diagnosed <- cces %>%
+  group_by(state) %>%
+  summarize(know_no_one_diagnosed = mean(CC20_309a_5))
+
+state_covid_draft<- state_covid_draft %>%
+  left_join(know_no_one_diagnosed, by="state")
+
+## How Has Someone's Work Status Been Effected By the Pandemic
+
+### Reduced Hours
+
+hours_reduced <- cces %>%
+  group_by(state) %>%
+  summarize(hours_reduced = mean(CC20_309c_1))
+
+state_covid_draft<- state_covid_draft %>%
+  left_join(hours_reduced, by="state")
+
+### Hours were reduced but have been restored
+
+hours_reduced_but_restored <- cces %>%
+  group_by(state) %>%
+  summarize(hours_reduced_but_restored  = mean(CC20_309c_2))
+
+state_covid_draft<- state_covid_draft %>%
+  left_join(hours_reduced_but_restored , by="state")
+
+### Temporarily laid off
+
+temporarily_laid_off <- cces %>%
+  group_by(state) %>%
+  summarize(temporarily_laid_off  = mean(CC20_309c_3))
+
+state_covid_draft<- state_covid_draft %>%
+  left_join(temporarily_laid_off, by="state")
+
+### Laid off but re-hired
+
+temporarily_laid_off_but_rehired <- cces %>%
+  group_by(state) %>%
+  summarize(temporarily_laid_off_but_rehired  = mean(CC20_309c_4))
+
+state_covid_draft<- state_covid_draft %>%
+  left_join(temporarily_laid_off_but_rehired, by="state")
+
+### Had more then one job and lost one of them
+
+multiple_jobs_lost_one <- cces %>%
+  group_by(state) %>%
+  summarize(multiple_jobs_lost_one  = mean(CC20_309c_5))
+
+state_covid_draft<- state_covid_draft %>%
+  left_join(multiple_jobs_lost_one, by="state")
+
+### Lost Job
+
+lost_job <- cces %>%
+  group_by(state) %>%
+  summarize(lost_job= mean(CC20_309c_6))
+
+state_covid_draft<- state_covid_draft %>%
+  left_join(lost_job, by="state")
+
+### Was not working when pandemic began
+
+was_not_working <- cces %>%
+  group_by(state) %>%
+  summarize(was_not_working= mean(CC20_309c_7))
+
+state_covid_draft<- state_covid_draft %>%
+  left_join(was_not_working, by="state")
+
+### Hours have increased
+
+hours_increased <- cces %>%
+  group_by(state) %>%
+  summarize(hours_increased= mean(CC20_309c_8))
+
+state_covid_draft<- state_covid_draft %>%
+  left_join(hours_increased, by="state")
+
+### Taken additional job since the pandemic
+
+additional_job <- cces %>%
+  group_by(state) %>%
+  summarize(additional_job= mean(CC20_309c_9))
+
+state_covid_draft<- state_covid_draft %>%
+  left_join(additional_job, by="state")
+
+### Nothing about work status has changed due to the pandemic
+
+no_change_in_work <- cces %>%
+  group_by(state) %>%
+  summarize(no_change_in_work= mean(CC20_309c_10))
+
+state_covid_draft<- state_covid_draft %>%
+  left_join(no_change_in_work, by="state")
+
+
+## Do People Support The CARES and HEROES Stimulus Packages
+## This code will need to be run after everything
+
+cces <-cces %>%
+na.omit("support_CARES")
+
+support_CARES <- cces %>%
+  group_by(state) %>%
+  summarize(support_CARES  = mean(CC20_351a, na.rm = TRUE))
+
+state_covid_draft<- state_covid_draft %>%
+  left_join(support_CARES, by="state")
+
+support_HEROES<- cces %>%
+  group_by(state) %>%
+  summarize(support_HEROES  = mean(CC20_351b, na.rm = TRUE))
+
+state_covid_draft<- state_covid_draft %>%
+  left_join(support_HEROES, by="state")
+
+
+
+####################################################################################################################################
+## Vaccinations
+covid_vaccination <- read_csv("covid19_vaccinations_in_the_united_states.csv",
+                                                      skip = 2)
+
+covid_vaccination <- covid_vaccination %>%
+  select(`State/Territory/Federal Entity`, `Total Doses Delivered`, `Total Doses Administered by State where Administered`, `Percent of Total Pop with at least One Dose by State of Residence`,
+         `Percent of 18+ Pop with at least One Dose by State of Residence`, `Percent of Total Pop Fully Vaccinated by State of Residence`,
+         `Percent of 18+ Pop Fully Vaccinated by State of Residence`, `Total Number of Pfizer doses adminstered`, `Total Number of Moderna doses administered`,
+        `Total Number of Janssen doses administered`) %>%
+  rename(state="State/Territory/Federal Entity")
+
+covid_vaccination$state= tolower(covid_vaccination$state)
+
+state_covid_draft<- state_covid_draft %>%
+  left_join(covid_vaccination, by="state")
+
+view(state_covid_draft)
+
+
+
+## cleaning up variable names
+state_covid_draft<-state_covid_draft %>%
+rename(trump_votes_2016=`2016TRUMP, DONALD J.`)%>%
+rename(clinton_votes = `2016CLINTON, HILLARY`) %>%
+rename(johnson_votes_2016 = `2016JOHNSON, GARY`) %>%
+rename(stein_votes_2016 = `2016STEIN, JILL`) %>%
+rename(trump_votes_2020 =`2020TRUMP, DONALD J.`) %>%
+rename(biden_votes_2020 = `2020BIDEN, JOSEPH R. JR`) %>%
+rename(jorgensen_votes_2020 = `2020JORGENSEN, JO`) %>%
+rename(total_population_2010 = `CENSUS2010POP`)%>%
+rename(total_population_est_2019 = `POPESTIMATE2019`) %>%
+rename(census_region = `REGION`) %>%
+rename(census_division = `DIVISION` )%>%
+rename(census_fips_code = `GeoFips`)
+
+state_covid_draft<-state_covid_draft %>%
+  rename(home_order_may_seventeen_2021 = `Stay at Home Order as of2021-05-17`) %>%
+  rename(home_order_may_third_2021 = home_order_may_2021)
+
+
+states<-state_covid_draft
+save(states,file= "US_states_data.RData")
+names(states)
+
+### Nov 2021, cleaning up the states dataset
+library(tidyverse)
+states<-as_tibble(states)
+
+
+## TK Take one from Blackboard and make changes to it directly, moving the lower set of States up.
+statestemp<-states[, c(1,205:208)]
+
+
+
+
+states3<-states %>%
+  filter(is.na(state_econ_liberalism_policy)==TRUE)
+
+states3 %>%
+  print(n=51)
+
+states2<-states %>%
+  select(state,state_econ_liberalism_policy, mass_social_liberalism_policy, mass_econ_liberalism_policy) %>%
+  filter(is.na(state_econ_liberalism_policy)==FALSE)
+
+states2<-states2 %>%
+  mutate(state=str_to_title(state))
+
+names(states3)
+
+states3<-states3[, c(1:204, 208)]
+
+names(states3)
+
+names(states2)
+
+
+states<-states3 %>%
+full_join(states2, by="state")
+
+states
+
+states2<-NULL
+states3<-NULL
+statestemp<-NULL
+
+rm(states2)
+rm(states3)
+rm(statestemp)
+
+
+## Edits December 2021
+
+# create 2020 total cases and deaths
+states<-states %>%
+  mutate(cases_2020 = cases_dec_2020) %>%
+  mutate(deaths_2020 = deaths_dec_2020)
+
+
+### Edits December 2021
+# adding the vaccination data by month
+vax_monthly<-read_csv(file="COVID-19_Vaccinations_in_the_United_States_Jurisdiction.csv")
+
+
+library(lubridate)
+vax_monthly<-vax_monthly %>%
+  mutate(Date = mdy(Date))
+
+vax_monthly %>%
+  mutate(year = year(Date)) %>%
+  mutate(month = month(Date)) %>%
+  mutate(year_month = )
+  select(Date, year,month, Location)
+
+vax_monthly$year_month <- format(as.Date(vax_monthly$Date), "%Y-%m")
+
+## The key variable is Administered
+vax_monthly %>%
+  select(year_month, Date, Location)
+
+## dates should stop at October 2021
+library(tidyr)
+
+datedvax<-vax_monthly %>%
+  select(year_month, Date, Location, Administered) %>%
+  group_by(Location, year_month) %>%
+  summarize(totals=sum(Administered)) %>%
+  filter(Location !="AS" & Location !="BP2" & Location != "DD2" & Location != "IH2" & Location !="LTC" & Location !="GU" & Location !="MH" & Location !="MP" & Location !="PR"
+         & Location !="VA2" & Location !="VI" & Location != "RP" & Location !="FM" & Location !="US") %>%
+  filter(year_month !=("2021-12") & year_month !=("2021-11")) %>%
+  pivot_wider(names_from=year_month, values_from=totals, names_prefix="vax") %>%
+  ungroup() %>%
+  print(n=60)
+
+
+states<-states %>%
+  mutate(Location = case_when(
+    state=="Alaska" ~ "AK",
+    state=="Alabama" ~ "AL",
+    state=="Arizona" ~ "AZ",
+    state=="Arkansas"~ "AR",
+    state=="California"~ "CA",
+    state=="Colorado"  ~ "CO",
+    state=="Connecticut"  ~ "CT",
+    state=="Delaware"  ~ "DE",
+    state=="District of Columbia"~ "DC",
+    state=="Florida"   ~ "FL",
+    state=="Georgia" ~ "GA",
+    state=="Hawaii"   ~ "HI",
+    state=="Idaho"    ~ "ID",
+    state=="Illinois"   ~ "IL",
+    state=="Indiana"    ~ "IN",
+    state=="Iowa"      ~ "IA",
+    state=="Kansas"    ~ "KS",
+    state=="Kentucky" ~ "KY",
+    state=="Louisiana"  ~ "LA",
+    state=="Maine"      ~ "ME",
+    state=="Maryland"    ~ "MD",
+    state=="Massachusetts"  ~ "MA",
+    state=="Michigan"     ~ "MI",
+    state=="Minnesota"   ~ "MN",
+    state=="Mississippi"   ~ "MS",
+    state=="Missouri"      ~ "MO",
+    state=="Montana"      ~ "MT",
+    state=="Nebraska"      ~ "NE",
+    state=="Nevada"       ~ "NV",
+    state=="New Hampshire" ~ "NH",
+    state=="New Jersey"     ~ "NJ",
+    state=="New Mexico"     ~ "NM",
+    state=="New York"       ~ "NY",
+    state=="North Carolina"  ~ "NC",
+    state=="North Dakota"    ~ "ND",
+    state=="Ohio"         ~ "OH",
+    state=="Oklahoma"       ~ "OK",
+    state=="Oregon"        ~ "OR",
+    state=="Pennsylvania"  ~ "PA",
+    state=="Rhode Island"  ~ "RI",
+    state=="South Carolina" ~ "SC",
+    state=="South Dakota"  ~ "SD",
+    state=="Tennessee"    ~ "TN",
+    state=="Texas"        ~ "TX",
+    state=="Utah"        ~ "UT",
+    state=="Vermont"    ~ "VT",
+    state=="Virginia"   ~ "VA",
+    state=="Washington"   ~ "WA",
+    state=="West Virginia"   ~ "WV",
+    state=="Wisconsin" ~ "WI",
+    state=="Wyoming"    ~ "WY"))
+
+states<-states %>%
+  inner_join(datedvax, by="Location")
+
+states<-states %>%
+  rename(vax_dec_2020 = `vax2020-12`) %>%
+  rename(vax_jan_2021=`vax2021-01`)%>%
+  rename(vax_feb_2021=`vax2021-02`)%>%
+  rename(vax_mar_2021=`vax2021-03`)%>%
+  rename(vax_apr_2021=`vax2021-04`)%>%
+  rename(vax_may_2021=`vax2021-05`)%>%
+  rename(vax_june_2021=`vax2021-06`)%>%
+  rename(vax_jul_2021=`vax2021-07`)%>%
+  rename(vax_aug_2021=`vax2021-08`)%>%
+  rename(vax_sep_2021=`vax2021-09`)%>%
+  rename(vax_oct_2021=`vax2021-10`)
+
+
+mutate(year_month2=ym(year_month)) %>%
+arrange(year_month)
+
+%>%
+  filter(year_month < )
+  #print(n=50)
+
+
+
+
+
+
+## Administered is cumulative
+Administered <dbl>, Administered_12Plus <dbl>, Administered_18Plus <dbl>, Administered_65Plus <dbl>
+
+
+
+## want to get monthly vaccines, cumulative
+vax_monthly %>%
+  group_by(Location) %>%
+
+
+states
+
