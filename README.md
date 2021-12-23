@@ -1,5 +1,5 @@
 # Coronavirus-Databases
-This repository contains script files Professor Whitt Kilburn at Grand Valley State University and I used to create coronavirus/political databases at the state, county, and international level, as well as CSV files of the finished databases, and a codebook. The repositories used to create these databases are currently private. You can message me for access to them. 
+This repository contains script files I wrote (working with Professor Whitt Kilburn of Grand Valley State University) to create coronavirus/political databases at the state, county, and international level, as well as CSV files of the finished databases. The repositories used to create these databases are currently private. You can message me for access to them. 
 
 # state_covid_politics
 state level covid data, politics, economic characteristics
