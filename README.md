@@ -357,7 +357,3 @@ Source: Centers for Disease Control and Prevention. (2021, August 1). COVID-19 V
 &nbsp;
 
 
-DECEMBER EDIT: 
-
-Vaccinations by month:
-https://data.cdc.gov/Vaccinations/COVID-19-Vaccinations-in-the-United-States-Jurisdi/unsk-b7fc
